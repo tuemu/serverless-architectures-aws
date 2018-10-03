@@ -28,7 +28,29 @@ var userController = {
     this.uiElements.profileImage = $('#profilepicture');
 
     this.data.config = config;
-    this.data.auth0Lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
+    this.data.auth0Lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain,
+      {
+        auth: {
+          responseType: 'token id_token',
+          params: {
+            scope: 'openid email profile'
+          }
+        }
+      }
+    );
+
+    // this.data.auth0Lock.on('authenticated', function(authResult) {
+    //   this.data.auth0Lock.getUserInfo(authResult.accessToken, function(error, profile) {
+    //     if (error) {
+    //       // Handle error
+    //       return;
+    //     }
+
+    //     localStorage.setItem('userToken', authResult.accessToken);
+    //     that.showUserAuthenticationDetails(JSON.stringify(profile));
+    //   });
+    // });
+
 
     var idToken = localStorage.getItem('userToken');
 
@@ -72,18 +94,38 @@ var userController = {
           scope: 'openid email user_metadata picture'
         }
       };
-
-      that.data.auth0Lock.show(params, function(err, profile, token) {
-        if (err) {
-          // Error callback
-          alert('There was an error');
-        } else {
-          // Save the JWT token.
-          localStorage.setItem('userToken', token);
+      
+      that.data.auth0Lock.on('authenticated', function(authResult) {
+        this.data.auth0Lock.getUserInfo(authResult.accessToken, function(error, profile) {
+          if (error) {
+            // Handle error
+            return;
+          }
+  
+          localStorage.setItem('userToken', authResult.accessToken);
           that.configureAuthenticatedRequests();
-          that.showUserAuthenticationDetails(profile);
-        }
+          that.showUserAuthenticationDetails(JSON.stringify(profile));
+        });
       });
+  
+      // that.data.auth0Lock.on('authenticated', function(authResult) {
+      //   localStorage.setItem('userToken', authResult);
+      //   that.configureAuthenticatedRequests();
+      //   that.showUserAuthenticationDetails(authResult.idTokenPayload);
+      // });
+      that.data.auth0Lock.show();
+
+      // that.data.auth0Lock.show(params, function(err, profile, token) {
+      //   if (err) {
+      //     // Error callback
+      //     alert('There was an error');
+      //   } else {
+      //     // Save the JWT token.
+      //     localStorage.setItem('userToken', token);
+      //     that.configureAuthenticatedRequests();
+      //     that.showUserAuthenticationDetails(profile);
+      //   }
+      // });
     });
 
     this.uiElements.logoutButton.click(function(e) {
