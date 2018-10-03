@@ -28,16 +28,35 @@ var userController = {
     this.uiElements.profileImage = $('#profilepicture');
 
     this.data.config = config;
-    this.data.auth0Lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain,
-      {
-        auth: {
-          responseType: 'token id_token',
-          params: {
-            scope: 'openid email profile'
-          }
+    this.data.auth0Lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
+
+    that.data.auth0Lock.on('authenticated', function(authResult) {
+      that.data.auth0Lock.getUserInfo(authResult.accessToken, function(error, profile) {
+        if (error) {
+          // Handle error
+          return;
         }
-      }
-    );
+
+
+        console.log('authResult.accessToken' + authResult.accessToken);
+        console.log('JSON.stringify(profile)' + JSON.stringify(profile));
+
+        localStorage.setItem('userToken', authResult.accessToken);
+        that.configureAuthenticatedRequests();
+        that.showUserAuthenticationDetails(profile);
+      });
+    });
+
+    // ,
+    //   {
+    //     auth: {
+    //       responseType: 'token id_token',
+    //       params: {
+    //         scope: 'openid email user_'
+    //       }
+    //     }
+    //   }
+    // );
 
     // this.data.auth0Lock.on('authenticated', function(authResult) {
     //   this.data.auth0Lock.getUserInfo(authResult.accessToken, function(error, profile) {
@@ -56,7 +75,8 @@ var userController = {
 
     if (idToken) {
       this.configureAuthenticatedRequests();
-      this.data.auth0Lock.getProfile(idToken, function(err, profile) {
+
+      this.data.auth0Lock.getUserInfo(idToken, function(err, profile) {
         if (err) {
           return alert('There was an error getting the profile: ' + err.message);
         }
@@ -74,6 +94,9 @@ var userController = {
     });
   },
   showUserAuthenticationDetails: function(profile) {
+    console.log('profile2: ' + profile[1]);
+    console.log('profile.picture: ' + JSON.stringify(profile.picture));
+    
     var showAuthenticationElements = !!profile;
 
     if (showAuthenticationElements) {
@@ -95,18 +118,22 @@ var userController = {
         }
       };
       
-      that.data.auth0Lock.on('authenticated', function(authResult) {
-        this.data.auth0Lock.getUserInfo(authResult.accessToken, function(error, profile) {
-          if (error) {
-            // Handle error
-            return;
-          }
+      // that.data.auth0Lock.on('authenticated', function(authResult) {
+      //   that.data.auth0Lock.getUserInfo(authResult.accessToken, function(error, profile) {
+      //     if (error) {
+      //       // Handle error
+      //       return;
+      //     }
   
-          localStorage.setItem('userToken', authResult.accessToken);
-          that.configureAuthenticatedRequests();
-          that.showUserAuthenticationDetails(JSON.stringify(profile));
-        });
-      });
+
+      //     console.log('authResult.accessToken' + authResult.accessToken);
+      //     console.log('JSON.stringify(profile)' + JSON.stringify(profile));
+
+      //     localStorage.setItem('userToken', authResult.accessToken);
+      //     that.configureAuthenticatedRequests();
+      //     that.showUserAuthenticationDetails(JSON.stringify(profile));
+      //   });
+      // });
   
       // that.data.auth0Lock.on('authenticated', function(authResult) {
       //   localStorage.setItem('userToken', authResult);
