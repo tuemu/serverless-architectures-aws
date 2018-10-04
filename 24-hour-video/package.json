@@ -15,5 +15,8 @@
   "license": "BSD-2-Clause",
   "devDependencies": {
     "local-web-server": "^1.2.8"
+  },
+  "dependencies": {
+    "auth0-js": "^9.7.3"
   }
 }
