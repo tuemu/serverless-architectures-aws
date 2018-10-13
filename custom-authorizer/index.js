@@ -33,15 +33,16 @@ exports.handler = function(event, context, callback){
     }
 
     var token = event.authorizationToken.split(' ')[1];
+    console.log(message, optionalParams)
 
-    // var secretBuffer = new Buffer(process.env.AUTH0_SECRET);
-    // jwt.verify(token, secretBuffer, function(err, decoded){
-    // 	if(err){
-    	// 	console.log('Failed jwt verification: ', err, 'auth: ', event.authorizationToken);
-        //     callback('Authorization Failed222');
-        //     //callback(null, generatePolicy('user', 'allow', event.methodArn));
-    	// } else {
+    var secretBuffer = new Buffer(process.env.AUTH0_SECRET);
+    jwt.verify(token, secretBuffer, function(err, decoded){
+    	if(err){
+    		console.log('Failed jwt verification: ', err, 'auth: ', event.authorizationToken);
+            callback('Authorization Failed222');
+            //callback(null, generatePolicy('user', 'allow', event.methodArn));
+    	} else {
     		callback(null, generatePolicy('user', 'allow', event.methodArn));
-    	// }
-    // })
+    	}
+    })
 };
