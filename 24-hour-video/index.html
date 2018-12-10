@@ -15,7 +15,7 @@
         <style>
             body {
                 padding-top: 50px;
-                padding-bottom: 20px;
+                padding-bottom: 20px;video-template
             }
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
@@ -28,7 +28,8 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
+
+    <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -46,20 +47,9 @@
                 <button id="auth0-login" class="btn btn-sucess">Sing In</button>
                 <button id="auth0-logout" class="btn btn-sucess">Sing Out</button>
             </div>
-<!--          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-        </form>
-    -->
-
-</div><!--/.navbar-collapse -->
+        </div>
       </div>
-    </nav>
+s    </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
@@ -70,36 +60,25 @@
       </div>
     </div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    <div class="container" id="video-list-container">
+            <div id="video-template" class="col-md-6 col">
+                <div class="video-card">
+                    <video width="100%" height="100%" controls>
+                        <source type="video/mp4"> Your browser does not support the video tag...
+                    </video>
+                </div>
+            </div>
+            <div id="video-list" class="row">
+            </div>
         </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
 
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2015</p>
-      </footer>
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    
+    <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <!-- <script src="https://cdn.auth0.com/js/lock-9.min.js"></script> -->
         <script src="https://cdn.auth0.com/js/lock/11.3.0/lock.min.js"></script>
+        <script src="js/video-controller.js"></script>
         <script src="js/user-controller.js"></script>
         <script src="js/config.js"></script>
         <script src="js/main.js"></script>
